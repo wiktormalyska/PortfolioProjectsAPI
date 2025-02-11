@@ -9,6 +9,7 @@ import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubUser;
 import ovh.wiktormalyska.portfolioprojectsapi.github.repositories.GitHubRepositoryRepository;
 import ovh.wiktormalyska.portfolioprojectsapi.github.repositories.GitHubUserRepositories;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,8 +72,11 @@ public class GitHubService {
         if (user == null || repository.isEmpty()) {
             return null;
         }
-
-        return gitHubClient.getMetaFileContentFromUserRepo(user, repository.get());
+        GitHubFile file = gitHubClient.getMetaFileContentFromUserRepo(user, repository.get());
+        String content = file.getContent().replace("\n", "").replace("\r", "");
+        byte [] decodedContentBytes = Base64.getDecoder().decode(content);
+        file.setDecodedContent(new String(decodedContentBytes));
+        return file;
     }
 }
 
