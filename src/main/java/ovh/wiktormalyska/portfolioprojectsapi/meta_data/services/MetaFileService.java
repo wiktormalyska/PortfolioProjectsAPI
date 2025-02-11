@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubFile;
 import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubRepository;
@@ -26,6 +25,8 @@ public class MetaFileService {
 
     @Transactional
     public MetaFile getMetaFileContentFromUserRepo(String username, String repositoryName) {
+        gitHubService.getUserRepos(username);
+
         GitHubRepository gitHubRepository = gitHubRepositoryRepository.findByName(repositoryName)
                 .orElseThrow(() -> new RuntimeException("Repository not found"));
 
@@ -38,6 +39,7 @@ public class MetaFileService {
             MetaFile metaFile = gson.fromJson(gitHubFile.getDecodedContent(), MetaFile.class);
             metaFile.setGitHubRepositoryId(gitHubRepository.getId());
             metaFile.setForked(gitHubRepository.isForked());
+            metaFile.setRepositoryUrl(gitHubRepository.getUrl());
             return metaFile;
         } catch (JsonSyntaxException e) {
             throw new RuntimeException("Meta file is not valid JSON");

@@ -62,6 +62,8 @@ public class GitHubService {
 
     @Transactional
     public GitHubFile getMetaFileContentFromUserRepo(String username, String repoName) {
+        getUserRepos(username);
+
         GitHubUser user = gitHubUserRepositories.findByUserName(username);
         Optional<GitHubRepository> repository = gitHubRepositoryRepository.findByName(repoName);
 
