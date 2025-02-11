@@ -8,3 +8,17 @@ DATABASE_USERNAME=api_username
 DATABASE_PASSWORD=api_password
 META_FILE_NAME=meta.json
 ```
+
+### Example meta.json file
+```json
+{
+  "name": "Project ABC",
+  "description": "Project Description",
+  "imageUrl": "https://example.com/image.jpg",
+  "technologies": [
+    "Java",
+    "Spring Boot",
+    "MariaDB"
+  ]
+}
+```

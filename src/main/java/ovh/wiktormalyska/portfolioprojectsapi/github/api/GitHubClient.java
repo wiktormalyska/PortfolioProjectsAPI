@@ -1,4 +1,4 @@
-package ovh.wiktormalyska.portfolioprojectsapi.github;
+package ovh.wiktormalyska.portfolioprojectsapi.github.api;
 
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

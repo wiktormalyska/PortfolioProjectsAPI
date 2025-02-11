@@ -1,8 +1,9 @@
-package ovh.wiktormalyska.portfolioprojectsapi.github;
+package ovh.wiktormalyska.portfolioprojectsapi.github.services;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ovh.wiktormalyska.portfolioprojectsapi.github.api.GitHubClient;
 import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubFile;
 import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubRepository;
 import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubUser;

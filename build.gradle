@@ -36,6 +36,7 @@ dependencies {
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation "me.paulschwarz:spring-dotenv:4.0.0"
+    implementation 'com.google.code.gson:gson:2.12.1'
 }
 
 tasks.named('test') {
