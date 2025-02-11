@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubFile;
 import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubRepository;
 
 import java.util.List;
@@ -23,4 +24,10 @@ public class GitHubController {
     public List<GitHubRepository> getUserRepos(@PathVariable String username) {
         return gitHubService.getUserRepos(username);
     }
+
+    @GetMapping("/meta/{username}/{repositoryName}/")
+    public GitHubFile getMetaFileContent(@PathVariable String username, @PathVariable String repositoryName) {
+        return gitHubService.getMetaFileContentFromUserRepo(username, repositoryName);
+    }
+
 }
