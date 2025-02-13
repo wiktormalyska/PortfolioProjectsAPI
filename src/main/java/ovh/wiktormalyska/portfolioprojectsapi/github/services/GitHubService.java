@@ -75,6 +75,9 @@ public class GitHubService {
             return null;
         }
         GitHubFile file = gitHubApi.getMetaFileContentFromUserRepo(repository.get());
+        if (file == null) {
+            return null;
+        }
         String content = file.getContent().replace("\n", "").replace("\r", "");
         byte [] decodedContentBytes = Base64.getDecoder().decode(content);
         file.setDecodedContent(new String(decodedContentBytes));

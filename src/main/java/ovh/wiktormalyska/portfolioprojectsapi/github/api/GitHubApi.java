@@ -1,13 +1,15 @@
 package ovh.wiktormalyska.portfolioprojectsapi.github.api;
 
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ResponseStatusException;
 import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubFile;
 import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubRepository;
 
@@ -17,6 +19,7 @@ import java.util.List;
 @Setter
 public class GitHubApi {
     private static final String GITHUB_API_URL = "https://api.github.com";
+    private static final Logger logger = LoggerFactory.getLogger(GitHubApi.class);
 
     private final Environment env;
     private RestTemplate restTemplate;
@@ -56,14 +59,19 @@ public class GitHubApi {
                     });
 
             return response.getBody();
+        } catch (HttpClientErrorException.NotFound e) {
+            return null;
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Meta file not found in repository.");
+            logger.error("Error retrieving meta file from repository: {}", repository.getFullName(), e);
+            return null;
         }
     }
 
-    public static void addHeaders(HttpHeaders headers) {
+    public void addHeaders(HttpHeaders headers) {
         headers.set("Accept", "application/vnd.github+json");
         headers.set("User-Agent", "PortfolioProjectsAPI");
         headers.set("X-GitHub-Api-Version", "2022-11-28");
+        if (env.getProperty("GITHUB_PERSONAL_ACCESS_TOKEN") != null)
+            headers.set("Authorization", "Bearer " + env.getProperty("GITHUB_PERSONAL_ACCESS_TOKEN"));
     }
 }

@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ovh.wiktormalyska.portfolioprojectsapi.meta_data.models.MetaFile;
 import ovh.wiktormalyska.portfolioprojectsapi.meta_data.services.MetaFileService;
 
+import java.io.FileNotFoundException;
+import java.util.List;
+
 @RestController
 @RequestMapping("/meta")
 public class MetaFileController {
@@ -20,8 +23,13 @@ public class MetaFileController {
     }
 
     @GetMapping("/{username}/{repositoryName}")
-    public MetaFile getMetaFileContentFromUserRepo(@PathVariable String username, @PathVariable String repositoryName) {
+    public MetaFile getMetaFileContentFromUserRepo(@PathVariable String username, @PathVariable String repositoryName) throws FileNotFoundException {
         return metaFileService.getMetaFileContentFromUserRepo(username, repositoryName);
+    }
+
+    @GetMapping("/getAll/{username}")
+    public List<MetaFile> getAllMetaFilesFromUserRepos(@PathVariable String username) {
+        return metaFileService.getAllMetaFilesFromUserRepos(username);
     }
 
 }
