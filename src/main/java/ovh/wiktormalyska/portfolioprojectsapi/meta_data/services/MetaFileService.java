@@ -30,7 +30,7 @@ public class MetaFileService {
         GitHubRepository gitHubRepository = gitHubRepositoryRepository.findByName(repositoryName)
                 .orElseThrow(() -> new RuntimeException("Repository not found"));
 
-        GitHubFile gitHubFile = gitHubService.getMetaFileContentFromUserRepo(username, gitHubRepository.getName());
+        GitHubFile gitHubFile = gitHubService.getMetaGitHubFileContentFromUserRepo(username, gitHubRepository.getName());
         if (gitHubFile == null || gitHubFile.getDecodedContent() == null) {
             throw new RuntimeException("Meta file not found");
         }

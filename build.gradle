@@ -13,36 +13,39 @@ java {
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
 repositories {
     mavenCentral()
 }
 
+
 dependencies {
+    // Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // Database
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+    // Environment variable
+    implementation "me.paulschwarz:spring-dotenv:4.0.0"
+
+    // JSON
+    implementation 'com.google.code.gson:gson:2.12.1'
+
+    // Testing dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    implementation "me.paulschwarz:spring-dotenv:4.0.0"
-    implementation 'com.google.code.gson:gson:2.12.1'
-    repositories { mavenCentral() }
     testImplementation 'org.mockito:mockito-core:5.15.2'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.15.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
+
 
 tasks.named('test') {
     useJUnitPlatform()

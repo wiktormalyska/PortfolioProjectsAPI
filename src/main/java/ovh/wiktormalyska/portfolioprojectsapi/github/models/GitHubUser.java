@@ -22,8 +22,4 @@ public class GitHubUser {
     @Setter
     private Long lastUpdate;
 
-    @Setter
-    @OneToMany(mappedBy = "githubUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<GitHubRepository> repositories = new ArrayList<>();
-
 }

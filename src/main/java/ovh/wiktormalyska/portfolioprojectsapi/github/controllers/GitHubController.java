@@ -26,9 +26,9 @@ public class GitHubController {
         return gitHubService.getUserRepos(username);
     }
 
-    @GetMapping("/meta/{username}/{repositoryName}/")
-    public GitHubFile getMetaFileContent(@PathVariable String username, @PathVariable String repositoryName) {
-        return gitHubService.getMetaFileContentFromUserRepo(username, repositoryName);
+    @GetMapping("/meta/{username}/{repositoryName}")
+    public GitHubFile getMetaGitHubFileContent(@PathVariable String username, @PathVariable String repositoryName) {
+        return gitHubService.getMetaGitHubFileContentFromUserRepo(username, repositoryName);
     }
 
 }
