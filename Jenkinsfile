@@ -39,6 +39,7 @@ pipeline {
 
         stage('Publish Test Results') {
             steps {
+                sh 'pwd && ls -R ./build'
                 junit './build/test-results/test/*.xml'
             }
         }
