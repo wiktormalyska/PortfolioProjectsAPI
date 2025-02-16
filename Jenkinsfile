@@ -6,6 +6,14 @@ pipeline {
     }
 
     stages {
+        stage('Input .env file') {
+            steps {
+                withCredentials([file(credentialsId: 'portfolio-projects-api-.env', variable: 'BACKEND_ENV_FILE')]) {
+                    sh 'cp "$BACKEND_ENV_FILE" src/main/resources/.env'
+                }
+            }
+        }
+
          stage('Build Docker Image') {
              steps {
                  script {
