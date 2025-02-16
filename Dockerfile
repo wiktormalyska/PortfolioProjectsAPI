@@ -6,10 +6,10 @@ COPY . /app
 
 RUN ls -l /app
 
-RUN ./gradlew build --no-daemon
+RUN gradle build --no-daemon
 
 FROM openjdk:23-jdk-slim
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar /app/app.jar
 
-CMD ["java", "-jar", "/app/app.jar"]
+CMD ["java", "-jar", "/app/app.jar", "--debug"]
