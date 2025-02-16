@@ -31,6 +31,7 @@ pipeline {
         stage ('Run Tests') {
             steps {
                 script {
+                    sh 'find . -name "gradlew" -exec chmod +x {} \\;'
                     sh './gradlew test'
                 }
             }

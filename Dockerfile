@@ -4,8 +4,6 @@ WORKDIR /app
 
 COPY . /app
 
-RUN chmod +x /app/gradlew
-
 RUN gradle build --no-daemon
 
 FROM openjdk:23-jdk-slim
