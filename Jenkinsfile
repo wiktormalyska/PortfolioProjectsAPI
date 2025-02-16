@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'PortfolioProjectsAPI'
+        DOCKER_IMAGE = 'portfolio-projects-api'
     }
 
     stages {
