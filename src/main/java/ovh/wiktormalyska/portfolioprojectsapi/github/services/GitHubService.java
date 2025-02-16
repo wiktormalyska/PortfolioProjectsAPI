@@ -2,6 +2,7 @@ package ovh.wiktormalyska.portfolioprojectsapi.github.services;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ovh.wiktormalyska.portfolioprojectsapi.github.api.GitHubApi;
 import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubFile;
@@ -29,6 +30,7 @@ public class GitHubService {
     }
 
 
+    @Cacheable("userRepos")
     @Transactional
     public List<GitHubRepository> getUserRepos(String username) {
         GitHubUser user = gitHubUserRepositories.findByUserName(username);
@@ -60,6 +62,7 @@ public class GitHubService {
         return gitHubRepositoryRepository.findByGithubUser_UserName(username);
     }
 
+    @Cacheable("metaFiles")
     @Transactional
     public GitHubFile getMetaGitHubFileContentFromUserRepo(String username, String repoName) {
 

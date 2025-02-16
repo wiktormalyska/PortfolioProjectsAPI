@@ -24,7 +24,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ovh.wiktormalyska.portfolioprojectsapi.github.api.GitHubApi.addHeaders;
 
 @ExtendWith(MockitoExtension.class)
 public class GitHubApiTests {
@@ -125,7 +124,6 @@ public class GitHubApiTests {
                 .build();
 
 
-
         when(restTemplate.exchange(
                 eq(GITHUB_API_URL + "/repos/" + mockedRepository.getFullName() + "/contents/" + env.getProperty("META_FILE_NAME")),
                 eq(HttpMethod.GET),
@@ -134,8 +132,8 @@ public class GitHubApiTests {
                 })
         )).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Meta file not found in repository."));
 
-        assertThrows(ResponseStatusException.class, () -> {
-            gitHubApi.getMetaFileContentFromUserRepo(mockedRepository);
-        });
+        assertNull(
+                gitHubApi.getMetaFileContentFromUserRepo(mockedRepository)
+        );
     }
 }

@@ -13,6 +13,7 @@ import ovh.wiktormalyska.portfolioprojectsapi.github.repositories.GitHubReposito
 import ovh.wiktormalyska.portfolioprojectsapi.github.services.GitHubService;
 import ovh.wiktormalyska.portfolioprojectsapi.meta_data.models.MetaFile;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ public class MetaFileServiceTests {
     private MetaFileService metaFileService;
 
     @Test
-    public void shouldReturnMetaFileContentFromUserRepo() {
+    public void shouldReturnMetaFileContentFromUserRepo() throws FileNotFoundException {
         String username = "username";
         String repositoryName = "repositoryName";
 
@@ -56,16 +57,18 @@ public class MetaFileServiceTests {
         when(gitHubRepositoryRepository.findByName(repositoryName)).thenReturn(Optional.of(mockedGitHubRepository));
         when(gitHubService.getMetaGitHubFileContentFromUserRepo(username, repositoryName)).thenReturn(file);
 
-        MetaFile metaFile = metaFileService.getMetaFileContentFromUserRepo(username, repositoryName);
 
-        assertEquals(metaFile.getGitHubRepositoryId(), mockedGitHubRepository.getId());
-        assertFalse(metaFile.isForked());
-        assertEquals(metaFile.getRepositoryUrl(), mockedGitHubRepository.getUrl());
+            MetaFile metaFile = metaFileService.getMetaFileContentFromUserRepo(username, repositoryName);
+            assertNotNull(metaFile);
+            assertEquals(metaFile.getGitHubRepositoryId(), mockedGitHubRepository.getId());
+            assertFalse(metaFile.isForked());
+            assertEquals(metaFile.getRepositoryUrl(), mockedGitHubRepository.getUrl());
+
 
     }
 
     @Test
-    public void shouldReturnMetaFileContentFromUserRepo_gitHubFileIsNull() {
+    public void shouldReturnMetaFileContentFromUserRepo_gitHubFileIsNull() throws FileNotFoundException {
         String username = "username";
         String repositoryName = "repositoryName";
 
@@ -81,14 +84,14 @@ public class MetaFileServiceTests {
         when(gitHubRepositoryRepository.findByName(repositoryName)).thenReturn(Optional.of(mockedGitHubRepository));
         when(gitHubService.getMetaGitHubFileContentFromUserRepo(username, repositoryName)).thenReturn(null);
 
-        assertThrows(RuntimeException.class, () -> {
-            metaFileService.getMetaFileContentFromUserRepo(username, repositoryName);
-        });
+        assertNull(
+            metaFileService.getMetaFileContentFromUserRepo(username, repositoryName)
+        );
 
     }
 
     @Test
-    public void shouldReturnMetaFileContentFromUserRepo_invalidJsonGitHubFileContent() {
+    public void shouldReturnMetaFileContentFromUserRepo_invalidJsonGitHubFileContent() throws FileNotFoundException {
         String username = "username";
         String repositoryName = "repositoryName";
 
@@ -106,9 +109,9 @@ public class MetaFileServiceTests {
         when(gitHubService.getUserRepos(username)).thenReturn(List.of(mockedGitHubRepository));
         when(gitHubRepositoryRepository.findByName(repositoryName)).thenReturn(Optional.of(mockedGitHubRepository));
         when(gitHubService.getMetaGitHubFileContentFromUserRepo(username, repositoryName)).thenReturn(file);
-        assertThrows(RuntimeException.class, () -> {
-            metaFileService.getMetaFileContentFromUserRepo(username, repositoryName);
-        });
+        assertNull(
+            metaFileService.getMetaFileContentFromUserRepo(username, repositoryName)
+        );
 
     }
 
