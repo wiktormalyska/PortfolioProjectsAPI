@@ -1,0 +1,11 @@
+services:
+  backend:
+    image: portfolio-projects-api:latest
+    container_name: portfolio-projects-api
+#    ports:
+#      - "8080:8080"
+    networks:
+      - portfolio
+networks:
+    portfolio:
+        external: true
