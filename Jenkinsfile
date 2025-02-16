@@ -22,18 +22,18 @@ pipeline {
              }
          }
 
-        stage ('Verify Workspace') {
-            steps {
-                sh 'tree -a'
-            }
-        }
-
         stage ('Run Tests') {
             steps {
                 script {
                     sh 'find . -name "gradlew" -exec chmod +x {} \\;'
                     sh './gradlew test'
                 }
+            }
+        }
+
+        stage ('Verify Workspace') {
+            steps {
+                sh 'tree -a'
             }
         }
 
