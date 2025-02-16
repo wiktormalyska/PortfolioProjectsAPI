@@ -25,7 +25,7 @@ pipeline {
         stage ('Run Tests') {
             steps {
                 script {
-                    sh 'docker run --rm ${DOCKER_IMAGE} ./gradlew test'
+                    sh './gradlew test'
                 }
             }
         }
