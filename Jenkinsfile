@@ -22,6 +22,12 @@ pipeline {
              }
          }
 
+        stage ('Verify Workspace') {
+            steps {
+                sh 'tree -a'
+            }
+        }
+
         stage ('Run Tests') {
             steps {
                 script {
