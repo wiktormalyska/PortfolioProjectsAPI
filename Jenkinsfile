@@ -55,7 +55,7 @@ pipeline {
     }
     post {
         always {
-            sh 'docker rmi ${DOCKER_IMAGE}'
+            sh 'docker-compose logs'
         }
     }
 }
