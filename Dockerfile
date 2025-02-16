@@ -4,7 +4,9 @@ WORKDIR /app
 
 COPY . /app
 
-RUN gradle build --no-daemon
+RUN ls -l /app
+
+RUN ./gradlew build --no-daemon
 
 FROM openjdk:23-jdk-slim
 WORKDIR /app
