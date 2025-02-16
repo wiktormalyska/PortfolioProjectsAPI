@@ -43,6 +43,14 @@ pipeline {
                 junit '**/test-results/test/*.xml'
             }
         }
+
+        stage('Run Docker Compose') {
+            steps {
+                script {
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
     }
     post {
         always {
