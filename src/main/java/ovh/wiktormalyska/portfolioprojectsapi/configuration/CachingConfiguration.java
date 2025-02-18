@@ -15,7 +15,7 @@ public class CachingConfiguration {
 
     @Bean
     public CacheManager cacheManager() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager("gitHubFiles", "gitHubRepositories", "gitHubUsers", "metaFiles");
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager("gitHubFiles", "gitHubRepositories", "gitHubUsers", "metaFiles", "userRepos");
         cacheManager.setCaffeine(Caffeine.newBuilder()
                 .expireAfterWrite(10, TimeUnit.MINUTES)
                 .maximumSize(500)
