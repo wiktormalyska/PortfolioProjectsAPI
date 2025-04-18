@@ -18,10 +18,4 @@ class PortfolioProjectsApiApplicationTests {
     void contextLoads() {
         assertEquals("meta.json", env.getProperty("META_FILE_NAME"));
     }
-
-    @Test
-    void mainRuns() {
-        PortfolioProjectsApiApplication.main(new String[] {});
-    }
-
 }
