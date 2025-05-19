@@ -6,8 +6,6 @@ services:
 #      - "8080:8080"
     networks:
       - portfolio
-    environment:
-      -
 networks:
     portfolio:
         external: true
