@@ -14,13 +14,24 @@ pipeline {
             }
         }
 
-        stage('Input keystore file') {
-            steps {
+    stage('Input keystore file') {
+        steps {
+            script {
+                sh 'mkdir -p src/main/resources'
                 withCredentials([file(credentialsId: 'portfolio-project-api-keystore-p12', variable: 'BACKEND_KEYSTORE_FILE')]) {
-                    sh 'cp "$BACKEND_KEYSTORE_FILE" src/main/resources/keystore.p12'
+                    sh '''
+                        if [ -f "$BACKEND_KEYSTORE_FILE" ]; then
+                            cp "$BACKEND_KEYSTORE_FILE" src/main/resources/keystore.p12
+                            echo "Keystore file copied successfully"
+                        else
+                            echo "ERROR: Keystore file not found at $BACKEND_KEYSTORE_FILE"
+                            exit 1
+                        fi
+                    '''
                 }
             }
         }
+    }
 
          stage('Build Docker Image') {
              steps {
