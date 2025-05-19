@@ -13,11 +13,6 @@ pipeline {
                 }
             }
         }
-        stage ('Verify Workspace') {
-            steps {
-                sh 'tree -a'
-            }
-        }
 
         stage('Input keystore file') {
             steps {
