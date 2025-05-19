@@ -17,8 +17,11 @@ pipeline {
         stage('Input keystore file') {
             steps {
                 withCredentials([file(credentialsId: 'portfolio-projects-api-keystore', variable: 'BACKEND_KEYSTORE_FILE')]) {
-                    sh 'echo "$BACKEND_KEYSTORE_FILE"'
-                    sh 'cp "$BACKEND_KEYSTORE_FILE" src/main/resources/keystore.p12'
+                    sh '''
+                        chmod 777 src/main/resources || true
+                        cp "$BACKEND_KEYSTORE_FILE" src/main/resources/keystore.p12
+                        chmod 644 src/main/resources/keystore.p12 || true
+                    '''
                 }
             }
         }
