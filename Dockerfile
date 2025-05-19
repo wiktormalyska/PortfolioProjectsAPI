@@ -10,4 +10,4 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar /app/app.jar
 
-CMD ["java", "-jar", "/app/app.jar", "--debug"]
+CMD ["java", "-jar", "/app/app.jar"]
