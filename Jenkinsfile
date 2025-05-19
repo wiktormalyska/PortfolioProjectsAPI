@@ -14,23 +14,6 @@ pipeline {
             }
         }
 
-        stage('Input keystore file') {
-            steps {
-                withCredentials([file(credentialsId: 'portfolio-projects-api-keystore', variable: 'BACKEND_KEYSTORE_FILE')]) {
-                    sh '''
-                        # Remove the existing file first if it exists
-                        rm -f src/main/resources/keystore.p12
-
-                        # Copy the new keystore file
-                        cp "$BACKEND_KEYSTORE_FILE" src/main/resources/keystore.p12
-
-                        # Set appropriate permissions
-                        chmod 644 src/main/resources/keystore.p12
-                   '''
-                }
-            }
-        }
-
          stage('Build Docker Image') {
              steps {
                  script {
