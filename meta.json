@@ -1,0 +1,10 @@
+{
+  "name": "PortfolioProjectsAPI",
+  "description": "API That reads data about projects from a JSON file and returns it in a structured format.",
+  "imageUrl": "https://example.com/image.jpg",
+  "technologies": [
+    "Java",
+    "SpringBoot",
+    "Docker"
+  ]
+}
