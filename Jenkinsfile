@@ -14,6 +14,14 @@ pipeline {
             }
         }
 
+        stage('Input keystore file') {
+            steps {
+                withCredentials([file(credentialsId: 'portfolio-project-api-keystore-p12', variable: 'BACKEND_KEYSTORE_FILE')]) {
+                    sh 'cp "BACKEND_KEYSTORE_FILE" src/main/resources/keystore.p12'
+                }
+            }
+        }
+
          stage('Build Docker Image') {
              steps {
                  script {
