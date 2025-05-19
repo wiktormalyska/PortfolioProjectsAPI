@@ -5,9 +5,9 @@ services:
 #    ports:
 #      - "8080:8080"
     networks:
-      - portfolio
+      - xcaddy
     environment:
       - spring_profiles_active=prod
 networks:
-    portfolio:
-        external: true
+  xcaddy:
+    external: true
