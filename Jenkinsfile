@@ -18,11 +18,14 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'portfolio-projects-api-keystore', variable: 'BACKEND_KEYSTORE_FILE')]) {
                     sh '''
-                       ls -la src/main/
-                       mkdir -p src/main/resources
-                       ls -la src/main/resources
-                       chmod -R 777 src/
-                       cp "$BACKEND_KEYSTORE_FILE" src/main/resources/keystore.p12
+                        # Remove the existing file first if it exists
+                        rm -f src/main/resources/keystore.p12
+
+                        # Copy the new keystore file
+                        cp "$BACKEND_KEYSTORE_FILE" src/main/resources/keystore.p12
+
+                        # Set appropriate permissions
+                        chmod 644 src/main/resources/keystore.p12
                    '''
                 }
             }
