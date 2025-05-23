@@ -1,7 +1,7 @@
 {
   "name": "PortfolioProjectsAPI",
   "description": "API That reads data about projects from a JSON file and returns it in a structured format.",
-  "imageUrl": "https://github.com/wiktormalyska/portfolio/blob/master/meta_photo.png?raw=true",
+  "imageUrl": "https://github.com/wiktormalyska/PortfolioProjectsAPI/blob/master/meta_photo.png?raw=true",
   "technologies": [
     "Java",
     "SpringBoot"
