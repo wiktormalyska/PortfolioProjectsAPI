@@ -22,6 +22,7 @@ public class MetaFile {
     private String description;
     private boolean isForked;
     private String imageUrl;
+    private String websiteUrl;
 
     @ElementCollection
     @CollectionTable(name = "meta_file_technologies", joinColumns = @JoinColumn(name = "git_hub_repository_id"))
