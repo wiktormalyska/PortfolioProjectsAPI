@@ -4,7 +4,6 @@
   "imageUrl": "https://example.com/image.jpg",
   "technologies": [
     "Java",
-    "SpringBoot",
-    "Docker"
+    "SpringBoot"
   ]
 }
