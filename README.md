@@ -46,7 +46,8 @@ GITHUB_PERSONAL_ACCESS_TOKEN=ghp_abc123
     "Java",
     "Spring Boot",
     "MariaDB"
-  ]
+  ],
+   "websiteUrl": "https://example.com"
 }
 ```
 
