@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubFile;
 import ovh.wiktormalyska.portfolioprojectsapi.github.models.GitHubRepository;
@@ -27,9 +29,11 @@ public class MetaFileService {
     GitHubRepositoryRepository gitHubRepositoryRepository;
     Gson gson = new Gson();
     Logger logger = LoggerFactory.getLogger(MetaFileService.class);
+    private final Environment env;
 
     @Autowired
-    public MetaFileService(GitHubService gitHubService, GitHubRepositoryRepository gitHubRepositoryRepository) {
+    public MetaFileService(GitHubService gitHubService, GitHubRepositoryRepository gitHubRepositoryRepository, Environment env) {
+        this.env = env;
         this.gitHubService = gitHubService;
         this.gitHubRepositoryRepository = gitHubRepositoryRepository;
     }
@@ -82,6 +86,17 @@ public class MetaFileService {
         } catch (Exception e) {
             logger.error("Transaction failed for user: {}", username, e);
             throw new RuntimeException("Transaction failed for user: " + username, e);
+        }
+    }
+
+    @Scheduled(fixedRate = 5 * 60 * 1000)
+    public void updateAllMetaFiles() {
+        String username = env.getProperty("DEFAULT_GITHUB_USERNAME");
+        logger.info("Scheduled update for all meta files for user: {}", username);
+        try {
+            getAllMetaFilesFromUserRepos(username);
+        } catch (Exception e) {
+            logger.error("Scheduled update failed", e);
         }
     }
 
