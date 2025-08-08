@@ -33,7 +33,7 @@ DATABASE_USERNAME=api_username
 DATABASE_PASSWORD=api_password
 META_FILE_NAME=meta.json
 GITHUB_PERSONAL_ACCESS_TOKEN=ghp_abc123
-DEFAULT_GITHUB_USERNAME=
+DEFAULT_GITHUB_USERNAME=wiktormalyska
 ```
 
 ### Example `meta.json`
