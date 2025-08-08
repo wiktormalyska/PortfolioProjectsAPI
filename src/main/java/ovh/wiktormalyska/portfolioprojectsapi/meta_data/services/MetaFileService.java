@@ -94,7 +94,7 @@ public class MetaFileService {
         }
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 300000)
     @CachePut(value = "metaFilesAll", key = "'default'")
     public List<MetaFile> updateAllMetaFiles() {
         String username = env.getProperty("DEFAULT_GITHUB_USERNAME");
