@@ -68,16 +68,14 @@ public class MetaFileService {
     @Transactional(dontRollbackOn = FileNotFoundException.class)
     public List<MetaFile> getAllMetaFilesFromUserRepos(String username) {
         try {
-            if (username.isBlank()) {
-                username = "wiktormalyska";
-            }
-            gitHubService.getUserRepos(username);
-            List<GitHubRepository> repositories = gitHubRepositoryRepository.findByGithubUser_UserName(username);
+            final String finalUsername = username.isBlank() ? "wiktormalyska" : username;
+            gitHubService.getUserRepos(finalUsername);
+            List<GitHubRepository> repositories = gitHubRepositoryRepository.findByGithubUser_UserName(finalUsername);
 
             return repositories.stream()
                     .map(repository -> {
                         try {
-                            return getMetaFileContentFromUserRepo(username, repository.getName());
+                            return getMetaFileContentFromUserRepo(finalUsername, repository.getName());
                         } catch (FileNotFoundException e) {
                             logger.warn("Meta file not found for repository: {}", repository.getName(), e);
                             return null;
@@ -90,13 +88,13 @@ public class MetaFileService {
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
-            logger.error("Transaction failed for user: {}", username, e);
-            throw new RuntimeException("Transaction failed for user: " + username, e);
+            logger.error("Transaction failed for user: {}", finalUsername, e);
+            throw new RuntimeException("Transaction failed for user: " + finalUsername, e);
         }
     }
 
     @Scheduled(fixedRate = 5000)
-    @CachePut(value = "metaFilesAll", key = "#username")
+    @CachePut(value = "metaFilesAll", key = "'default'")
     public List<MetaFile> updateAllMetaFiles() {
         String username = env.getProperty("DEFAULT_GITHUB_USERNAME");
         logger.info("Scheduled update for all meta files for user: {}", username);
