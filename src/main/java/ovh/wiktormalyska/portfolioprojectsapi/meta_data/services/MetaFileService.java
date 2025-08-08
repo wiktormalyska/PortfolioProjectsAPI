@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -62,6 +64,7 @@ public class MetaFileService {
         }
     }
 
+    @Cacheable(value = "metaFilesAll", key = "#username")
     @Transactional(dontRollbackOn = FileNotFoundException.class)
     public List<MetaFile> getAllMetaFilesFromUserRepos(String username) {
         try {
@@ -89,14 +92,16 @@ public class MetaFileService {
         }
     }
 
-    @Scheduled(fixedRate = 5 * 60 * 1000)
-    public void updateAllMetaFiles() {
+    @Scheduled(fixedRate = 5000)
+    @CachePut(value = "metaFilesAll", key = "#username")
+    public List<MetaFile> updateAllMetaFiles() {
         String username = env.getProperty("DEFAULT_GITHUB_USERNAME");
         logger.info("Scheduled update for all meta files for user: {}", username);
         try {
-            getAllMetaFilesFromUserRepos(username);
+            return getAllMetaFilesFromUserRepos(username);
         } catch (Exception e) {
             logger.error("Scheduled update failed", e);
+            return null;
         }
     }
 
