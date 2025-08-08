@@ -67,8 +67,9 @@ public class MetaFileService {
     @Cacheable(value = "metaFilesAll", key = "#username")
     @Transactional(dontRollbackOn = FileNotFoundException.class)
     public List<MetaFile> getAllMetaFilesFromUserRepos(String username) {
+        final String finalUsername = username.isBlank() ? "wiktormalyska" : username;
         try {
-            final String finalUsername = username.isBlank() ? "wiktormalyska" : username;
+            
             gitHubService.getUserRepos(finalUsername);
             List<GitHubRepository> repositories = gitHubRepositoryRepository.findByGithubUser_UserName(finalUsername);
 
