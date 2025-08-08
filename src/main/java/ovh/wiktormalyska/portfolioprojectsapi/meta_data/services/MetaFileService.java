@@ -98,9 +98,10 @@ public class MetaFileService {
     @CachePut(value = "metaFilesAll", key = "'default'")
     public List<MetaFile> updateAllMetaFiles() {
         String username = env.getProperty("DEFAULT_GITHUB_USERNAME");
-        logger.info("Scheduled update for all meta files for user: {}", username);
+        final String finalUsername = (username == null || username.isBlank()) ? "wiktormalyska" : username;
+        logger.info("Scheduled update for all meta files for user: {}", finalUsername);
         try {
-            return getAllMetaFilesFromUserRepos(username);
+            return getAllMetaFilesFromUserRepos(finalUsername);
         } catch (Exception e) {
             logger.error("Scheduled update failed", e);
             return null;
