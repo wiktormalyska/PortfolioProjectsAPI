@@ -28,8 +28,7 @@ public class MetaFileController {
     }
 
     @GetMapping("/getAll/{username}")
-    public List<MetaFile> getAllMetaFilesFromUserRepos(@PathVariable String username) {
-        return metaFileService.getAllMetaFilesFromUserRepos(username);
+    public List<MetaFile> getAllMetaFilesFromUser(@PathVariable String username) {
+        return metaFileService.getMetaFilesForUser(username);
     }
-
 }
