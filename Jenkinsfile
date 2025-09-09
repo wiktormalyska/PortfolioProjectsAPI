@@ -8,19 +8,21 @@ pipeline {
     stages {
         stage('Input .env file') {
             steps {
+                sh 'mkdir -p src/main/resources || true'
+                sh 'chmod -R u+rwX src/main/resources || true'
                 withCredentials([file(credentialsId: 'portfolio-projects-api-.env', variable: 'BACKEND_ENV_FILE')]) {
-                    sh 'cp "$BACKEND_ENV_FILE" src/main/resources/.env'
+                    sh 'install -m 600 "$BACKEND_ENV_FILE" "src/main/resources/.env"'
                 }
             }
         }
 
-         stage('Build Docker Image') {
-             steps {
-                 script {
-                     sh 'docker build -t ${DOCKER_IMAGE} .'
-                 }
-             }
-         }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                }
+            }
+        }
 
         stage ('Run Tests') {
             steps {
