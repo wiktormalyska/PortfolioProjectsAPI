@@ -46,6 +46,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.mockito:mockito-core:5.15.2'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.15.2'
+    testRuntimeOnly 'com.h2database:h2'
 
     // Logging
     implementation 'org.slf4j:slf4j-api:2.0.16'
